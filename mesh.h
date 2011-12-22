@@ -74,5 +74,13 @@ typedef struct mesh_t {
 #define MESH_ADD_TRIANGLE(mesh, t) \
         dlist_add(&((t)->node), &((mesh)->tlist))
 
+
+
+mesh_t *mesh_init();
+int mesh_add_verties(mesh_t *self, vertex_t *verties, int num);
+int mesh_add_constrained_poly(mesh_t *self, vertex_t *verties, int num);
+int mesh_add_constrained_line(mesh_t *self, vertex_t *st, vertes_t *ed);
+void mesh_destroy(mesh_t *self);
+
 #endif
 
