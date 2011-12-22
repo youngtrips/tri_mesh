@@ -166,5 +166,30 @@ static void mesh_del_triangle(mesh_t *self, triangle_t *tri)
     mesh_free_triangle(self, tri);
 }
 
+static void mesh_del_bad_triangle(mesh_t *self, triangle_t *from, vertex_t *p,
+        queue_t *valid_edge)
+{
+    half_edge_t *tmp;
+    half_edge_t *he;
+
+    he = from->edge;
+    do {
+        tmp = he->next;
+        if (he->pair->face && in_circle(he->pair->face, p)) {
+            // mark bad edge
+            he->face = NULL;
+            mesh_del_bad_triangle(self, he->pair->face, p, valid_edge);
+            // delete current bad edge he
+
+        } else {
+            // vaild edge
+            queue_push(valid_edge, he);
+        }
+        he = tmp;
+    } while(he != from->edge);
+
+    // delete bad triangle
+    mesh_del_triangle(self, from);
+}
 
 
