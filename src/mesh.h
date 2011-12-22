@@ -21,10 +21,10 @@ struct vertex_t {
     dlist_t node;
 };
 
-#define INIT_VERTEX(v, x, y) \
+#define INIT_VERTEX(v, _x, _y) \
     do { \
-        (v)->x = (x); \
-        (v)->y = (y); \
+        (v)->x = (_x); \
+        (v)->y = (_y); \
         (v)->edge = NULL; \
         init_dlist_node(&((v)->node)); \
     } while(0)
@@ -59,9 +59,11 @@ typedef struct mesh_t {
     dlist_t gc_elist;
     dlist_t gc_tlist;
 
+    vertex_t super_tri[3];
+
     int num_v;
     int num_e;
-    int num_f;
+    int num_t;
 } mesh_t;
 
 
@@ -76,11 +78,17 @@ typedef struct mesh_t {
 
 
 
-mesh_t *mesh_init();
-int mesh_add_verties(mesh_t *self, vertex_t *verties, int num);
+mesh_t *mesh_init(const vertex_t *verties, int num);
+int mesh_set_box(mesh_t *self, double left, double top, int width, int height);
+int mesh_add_vertex(mesh_t *self, double x, double y);
 int mesh_add_constrained_poly(mesh_t *self, vertex_t *verties, int num);
-int mesh_add_constrained_line(mesh_t *self, vertex_t *st, vertes_t *ed);
+int mesh_add_constrained_line(mesh_t *self, vertex_t *st, vertex_t *ed);
 void mesh_destroy(mesh_t *self);
+
+/* for debug */
+void mesh_dump_vertex(mesh_t *self);
+void mesh_dump_edge(mesh_t *self);
+void mesh_dump_triangle(mesh_t *self);
 
 #endif
 

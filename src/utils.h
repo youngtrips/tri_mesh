@@ -8,22 +8,20 @@
 #ifndef __UTILS_H
 #define __UTILS_H
 
+#include <math.h>
+
 #include "mesh.h"
 
 #define SQR(x) ((x) * (x))
 #define log_err(fmt, args...) fprintf(stderr, fmt, ##args)
+#define eps 1e-12
 
-int calc_circumcircle(const vertex_t *a,
-        const vertex_t *b,
-        const vertex_t *c, circle_t *circle);
-
-int in_circle(const circle_t *c, const vertex_t *p);
-int in_circle2(const vertex_t *a, const vertex_t *b, const vertex_t *c,
+int in_circumcircle(const vertex_t *a, const vertex_t *b, const vertex_t *c,
         const vertex_t *d);
 
 
 int create_bounding_triangle(const vertex_t *vertices, int num,
-        vertex_t **out);
+        vertex_t *out);
 
 #define DET(x1, y1, x2, y2) \
     ((x1) * (y1) - (x2) * (y1))
@@ -49,6 +47,13 @@ void print_vertex(const vertex_t *v);
                 v[2] = c; \
             } \
         } while(0)
+
+
+#define vertex_equal(a, b) \
+    (fabs((a)->x - (b)->x) < eps && fabs((a)->y - (b)->y) < eps)
+
+int in_triangle(const triangle_t *tri, const vertex_t *p);
+int in_tri_circumcircle(const triangle_t *tri, const vertex_t *p);
 
 #endif
 

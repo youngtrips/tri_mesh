@@ -10,66 +10,66 @@
 
 #include "utils.h"
 
-int calc_circumcircle(const vertex_t *a, const vertex_t *b, const vertex_t *c,
-        circle_t *circle)
+int dcmp(double x)
 {
-    real_t A = b->x - a->x;
-    real_t B = b->y - a->y;
-    real_t C = c->x - a->x;
-    real_t D = c->y - a->y;
-
-    real_t E = A * (a->x + b->x) + B * (a->y + b->y);
-    real_t F = C * (a->x + c->x) + D * (a->y + c->y);
-
-    real_t G = 2.0 * (A * (c->y - b->y) - B * (c->x - b->x));
-    if (FABS(G) < eps) {
+    if (fabs(x) < eps) {
         return -1;
     }
+    return x > 0;
+}
 
-    if (FABS(G) < eps) {
+int in_triangle(const triangle_t *tri, const vertex_t *p)
+{
+    vertex_t *v[3];
+    half_edge_t *cur;
+    int i;
+
+    cur = tri->edge;
+    i = 0;
+    do {
+        v[i++] = cur->vert;
+        cur = cur->next;
+        if (cur->face == NULL) {
+            return -1;
+        }
+    } while(cur != tri->edge);
+
+    int r1 = dcmp(cross(v[0], v[1], p));
+    int r2 = dcmp(cross(v[1], v[2], p));
+    int r3 = dcmp(cross(v[2], v[0], p));
+
+    if (r1 < 0 || r2 < 0 || r3 < 0) {
         return -1;
     }
-
-    circle->x = (D * E - B * F) / G;
-    circle->y = (A * F - C * E) / G;
-
-    circle->r_sqr = SQR(a->x - circle->x) + SQR(a->y - circle->y);
-
-    return 0;
+    return r1 && r2 && r3;
 }
 
-int in_circle(const circle_t *c, const vertex_t *p)
-{
-    return SQR(p->x - c->x) + SQR(p->y - c->y) + eps <= c->r_sqr;
-}
-
-// This function is based on an article by Jonathan Richard Shewchuk
-// "Robust Adaptive Floating-Point Geometric Predicates"
-// | ax-dx  ay-dy  (ax-dx)^2+(ay-dy)^2 |
-// | bx-dx  by-dy  (bx-dx)^2+(by-dy)^2 |
-// | cx-dx  cy-dy  (cx-dx)^2+(cy-dy)^2 |
-/* a, b and c must be in CCW order */
-/* 
+/* This function is based on an article by Jonathan Richard Shewchuk
+ * "Robust Adaptive Floating-Point Geometric Predicates"
+ * | ax-dx  ay-dy  (ax-dx)^2+(ay-dy)^2 |
+ * | bx-dx  by-dy  (bx-dx)^2+(by-dy)^2 |
+ * | cx-dx  cy-dy  (cx-dx)^2+(cy-dy)^2 |
+ * a, b and c must be in CCW order
  * inside: 1
  * outside: -1
  * oncircle: 0
  */
-int in_circle2(const vertex_t *a, const vertex_t *b, const vertex_t *c,
+int in_circumcircle(const vertex_t *a, const vertex_t *b, const vertex_t *c,
         const vertex_t *d)
 {
-  real_t ad_dx = a->x - d->x;
-  real_t ad_dy = a->y - d->y;
-  real_t ad_dsq = ad_dx * ad_dx + ad_dy * ad_dy;
+  double ad_dx = a->x - d->x;
+  double ad_dy = a->y - d->y;
+  double ad_dsq = ad_dx * ad_dx + ad_dy * ad_dy;
 
-  real_t bd_dx = b->x - d->x;
-  real_t bd_dy = b->y - d->y;
-  real_t bd_dsq = bd_dx * bd_dx + bd_dy * bd_dy;
+  double bd_dx = b->x - d->x;
+  double bd_dy = b->y - d->y;
+  double bd_dsq = bd_dx * bd_dx + bd_dy * bd_dy;
 
-  real_t cd_dx = c->x - d->x;
-  real_t cd_dy = c->y - d->y;
-  real_t cd_dsq = cd_dx * cd_dx + cd_dy * cd_dy;
+  double cd_dx = c->x - d->x;
+  double cd_dy = c->y - d->y;
+  double cd_dsq = cd_dx * cd_dx + cd_dy * cd_dy;
 
-  real_t calc = +ad_dx * (bd_dy * cd_dsq - cd_dy * bd_dsq)
+  double calc = +ad_dx * (bd_dy * cd_dsq - cd_dy * bd_dsq)
           - ad_dy * (bd_dx * cd_dsq - cd_dx * bd_dsq)
           + ad_dsq * (bd_dx * cd_dy - cd_dx * bd_dy);
 
@@ -78,7 +78,23 @@ int in_circle2(const vertex_t *a, const vertex_t *b, const vertex_t *c,
              : 0);
 }
 
-int create_bounding_triangle(const vertex_t *vertices, int num, vertex_t **out)
+int in_tri_circumcircle(const triangle_t *tri, const vertex_t *p)
+{
+    vertex_t *v[3];
+    half_edge_t *cur;
+    int i;
+
+    cur = tri->edge;
+    i = 0;
+    do {
+        v[i++] = cur->vert;
+        cur = cur->next;
+    } while(cur != tri->edge);
+
+    return in_circumcircle(v[0], v[1], v[2], p) > 0;
+}
+
+int create_bounding_triangle(const vertex_t *vertices, int num, vertex_t *out)
 {
     double minx;
     double miny;
@@ -104,14 +120,14 @@ int create_bounding_triangle(const vertex_t *vertices, int num, vertex_t **out)
     dx = (maxx - minx) * 10;
     dy = (maxy - miny) * 10;
 	
-    out[0]->x = minx - dx;
-    out[0]->y = miny - dy * 3;
+    out[0].x = minx - dx;
+    out[0].y = miny - dy * 3;
 
-    out[1]->x = minx - dx;
-    out[1]->y = maxy + dy;
+    out[1].x = minx - dx;
+    out[1].y = maxy + dy;
 
-    out[2]->x = maxx + dx * 3;
-    out[2]->y = maxy + dy;
+    out[2].x = maxx + dx * 3;
+    out[2].y = maxy + dy;
 
     return 0;
 }
@@ -126,10 +142,9 @@ double cross(const vertex_t *p0, const vertex_t *p1, const vertex_t *p2)
 void print_vertex(const vertex_t *v)
 {
     if (v) {
-        printf(REAL_FMT" "REAL_FMT, v->x, v->y);
+        printf("(%0.0lf, %0.0lf)", v->x, v->y);
     } else {
         printf(" ");
     }
 }
-
 
