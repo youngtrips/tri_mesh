@@ -16,6 +16,4 @@ verties.append((367, 430))
 verties.append((567, 299))
 verties.append((493, 133))
 
-#print mesh.init(verties, len(verties))
-print mesh.init([], 0)
-
+mesh = mesh.init(verties, len(verties))

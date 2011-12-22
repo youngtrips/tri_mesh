@@ -31,17 +31,17 @@ PyObject *wrap_mesh_init(PyObject *self, PyObject *args)
     if (num == 0) {
         mesh = mesh_init(NULL, 0);
     } else {
-        verties = (vertex_t*)calloc(num, sizeof(verties));
+        PyErr_NoMemory();
+        verties = (vertex_t*)calloc(num, sizeof(vertex_t));
         for (i = 0;i < num; i++) {
             tuple_obj = PyList_GetItem(vertex_list, i);
             item_obj = PyTuple_GetItem(tuple_obj, 0);
             x = PyFloat_AsDouble(item_obj);
             item_obj = PyTuple_GetItem(tuple_obj, 1);
             y = PyFloat_AsDouble(item_obj);
-            printf("(%lf, %lf)\n", x, y);
             INIT_VERTEX(&(verties[i]), x, y);
         }
-        printf("num = %d\n", num);
+        PyErr_NoMemory();
         mesh = mesh_init(verties, num);
         free(verties);
     }
