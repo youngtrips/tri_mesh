@@ -18,7 +18,7 @@ struct vertex_t {
     double x;
     double y;
     half_edge_t *edge;
-    dlist_node_t node;
+    dlist_t node;
 };
 
 #define INIT_VERTEX(v, x, y) \
@@ -34,7 +34,7 @@ struct half_edge_t {
     half_edge_t *next;
     triangle_t *face;
     vertex_t *vert;
-    dlist_node_t node;
+    dlist_t node;
 };
 
 #define INIT_HALF_EDGE(he, v) \
@@ -48,7 +48,7 @@ struct half_edge_t {
 
 struct triangle_t {
     half_edge_t *edge;
-    dlist_node_t node;
+    dlist_t node;
 };
 
 typedef struct mesh_t {

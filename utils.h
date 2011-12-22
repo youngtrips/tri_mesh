@@ -8,7 +8,7 @@
 #ifndef __UTILS_H
 #define __UTILS_H
 
-#include "cg_base.h"
+#include "mesh.h"
 
 #define SQR(x) ((x) * (x))
 #define log_err(fmt, args...) fprintf(stderr, fmt, ##args)
