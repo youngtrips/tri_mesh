@@ -176,7 +176,6 @@ half_edge_t *locate_vertex_with_triangle(const triangle_t *tri,
     f[1] = locate_vertex_with_edge(he[1], p);
     f[2] = locate_vertex_with_edge(he[2], p);
 
-    printf("f0=%d, f1=%d, f2=%d\n", f[0], f[1], f[2]);
     if (f[0] == ORIENT_LEFT && f[1] == ORIENT_LEFT &&
             f[2] == ORIENT_LEFT) {
         /* inside triangle */
