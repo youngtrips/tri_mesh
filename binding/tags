@@ -1,0 +1,51 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+MeshObject	mesh_object.c	/^} MeshObject;$/;"	t	typeref:struct:__anon1	file:
+MeshObjectType	mesh_object.c	/^static PyTypeObject MeshObjectType = {$/;"	v	file:
+MeshObject_AddVertex	mesh_object.c	/^static PyObject *MeshObject_AddVertex(MeshObject *self, PyObject *args)$/;"	f	file:
+MeshObject_DumpEdge	mesh_object.c	/^static PyObject *MeshObject_DumpEdge(MeshObject *self, PyObject *args)$/;"	f	file:
+MeshObject_DumpTriangle	mesh_object.c	/^static PyObject *MeshObject_DumpTriangle(MeshObject *self, PyObject *args)$/;"	f	file:
+MeshObject_DumpVertex	mesh_object.c	/^static PyObject *MeshObject_DumpVertex(MeshObject *self, PyObject *args)$/;"	f	file:
+MeshObject_GetTriangles	mesh_object.c	/^static PyObject *MeshObject_GetTriangles(MeshObject *self, PyObject *args)$/;"	f	file:
+MeshObject_SetBox	mesh_object.c	/^static PyObject *MeshObject_SetBox(MeshObject *self, PyObject *args)$/;"	f	file:
+MeshObject_dealloc	mesh_object.c	/^MeshObject_dealloc(MeshObject* self)$/;"	f	file:
+MeshObject_init	mesh_object.c	/^static int MeshObject_init(MeshObject *self, PyObject *args, PyObject *kwds)$/;"	f	file:
+MeshObject_members	mesh_object.c	/^static PyMemberDef MeshObject_members[] = {$/;"	v	file:
+MeshObject_methods	mesh_object.c	/^static PyMethodDef MeshObject_methods[] = {$/;"	v	file:
+MeshObject_name	mesh_object.c	/^static PyObject *MeshObject_name(MeshObject* self)$/;"	f	file:
+MeshObject_new	mesh_object.c	/^static PyObject *MeshObject_new(PyTypeObject *type,$/;"	f	file:
+Noddy	mesh_object.c	/^} Noddy;$/;"	t	typeref:struct:__anon2	file:
+bg	demo.py	/^    bg = pygame.Surface(screen.get_size())$/;"	v
+clock	demo.py	/^    clock = pygame.time.Clock()$/;"	v
+cur_poly	demo.py	/^    cur_poly = []$/;"	v
+draw_points	demo.py	/^def draw_points(screen, points):$/;"	f
+draw_polygons	demo.py	/^def draw_polygons(screen, polygons):$/;"	f
+first	mesh_object.c	/^    PyObject *first; \/* first name *\/$/;"	m	struct:__anon2	file:
+h	demo.py	/^            h = mesh.MeshObject(points, len(points))$/;"	v
+h	demo.py	/^    h = 800$/;"	v
+h	demo.py	/^    h = mesh.MeshObject([], 0)$/;"	v
+h	test.py	/^h = mesh.MeshObject(verties, len(verties))$/;"	v
+initmesh	mesh_object.c	/^void initmesh() $/;"	f
+last	mesh_object.c	/^    PyObject *last;  \/* last name *\/$/;"	m	struct:__anon2	file:
+load_polygons	demo.py	/^def load_polygons():$/;"	f
+makeup_polygon	demo.py	/^def makeup_polygon(points, p):$/;"	f
+math	demo.py	/^import math$/;"	i
+mesh	demo.py	/^import mesh$/;"	i
+mesh	mesh_object.c	/^    mesh_t *mesh;$/;"	m	struct:__anon1	file:
+mesh	test.py	/^import mesh$/;"	i
+module_methods	mesh_object.c	/^static PyMethodDef module_methods[] = {$/;"	v	file:
+number	mesh_object.c	/^    int number;$/;"	m	struct:__anon2	file:
+points	demo.py	/^    points = []$/;"	v
+polygons	demo.py	/^    polygons = []$/;"	v
+pygame	demo.py	/^import pygame$/;"	i
+running	demo.py	/^                running = False$/;"	v
+running	demo.py	/^    running = True$/;"	v
+save_polygons	demo.py	/^def save_polygons(polygons):$/;"	f
+screen	demo.py	/^    screen = pygame.display.set_mode((w, h), pygame.DOUBLEBUF | pygame.HWSURFACE, 32)$/;"	v
+tlist	test.py	/^tlist = h.triangles()$/;"	v
+verties	test.py	/^verties = []$/;"	v
+w	demo.py	/^    w = 1280 $/;"	v

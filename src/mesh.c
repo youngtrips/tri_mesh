@@ -184,8 +184,8 @@ static void mesh_del_edge(mesh_t *self, half_edge_t *he)
     mesh_del_half_edge(self, he);
     mesh_del_half_edge(self, pair);
 
-    printf("del half_edge: addr=%p\n", he);
-    printf("del half_edge: addr=%p\n", pair);
+//    printf("del half_edge: addr=%p\n", he);
+//    printf("del half_edge: addr=%p\n", pair);
 
     //dlist_del(&(he->node));
     //dlist_del(&(pair->node));
@@ -501,6 +501,7 @@ void mesh_dump_triangle(mesh_t *self)
     int cnt;
 
     printf("------------------triangle----------------------\n");
+    printf("triangle num: %d\n", self->num_t);
     cnt = 0;
     dlist_foreach(i, &(self->tlist)) {
         tri = (triangle_t*)dlist_entry(i, triangle_t, node);

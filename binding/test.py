@@ -17,8 +17,14 @@ verties.append((567, 299))
 verties.append((493, 133))
 
 
-h = mesh.MeshObject()
+h = mesh.MeshObject(verties, len(verties))
 
-for v in verties:
-    h.add_vertex(v)
+"""
+h.dump_vertex()
+h.dump_edge()
+h.dump_triangle()
+"""
+tlist = h.triangles()
 
+for t in tlist:
+    print list(t)
