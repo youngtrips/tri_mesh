@@ -16,4 +16,9 @@ verties.append((367, 430))
 verties.append((567, 299))
 verties.append((493, 133))
 
-mesh = mesh.init(verties, len(verties))
+
+h = mesh.MeshObject()
+
+for v in verties:
+    h.add_vertex(v)
+
