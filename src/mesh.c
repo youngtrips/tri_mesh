@@ -112,20 +112,25 @@ static half_edge_t *mesh_add_half_edge(mesh_t *self,
     /* find if existed such half_edge */
     he = st->edge;
 
-    /*
+#ifdef __DEBUG
     if (he) {
         do {
             // the pair edge must be exist, 
             // since edge is inserted or deleted by pair 
             pair = he->pair;
             if (vertex_equal(he->vert, st) && vertex_equal(pair->vert, ed)) {
-                printf("same half edge...\n");
+                printf("1same half edge...\n");
                 return he;
+            } else if (vertex_equal(pair->vert, st) && 
+                    vertex_equal(he->vert, ed)) {
+                printf("2same half edge...\n");
+                return pair;
             }
             he = pair->next;
         } while (he && he != st->edge);
     }
-    */
+    
+#else
 
     dlist_t *i;
 
@@ -136,6 +141,7 @@ static half_edge_t *mesh_add_half_edge(mesh_t *self,
             return he;
         }
     }
+#endif
 
     he = mesh_alloc_half_edge(self);
     if (he == NULL) {
@@ -201,7 +207,7 @@ static void mesh_del_edge(mesh_t *self, half_edge_t *he)
         he[2]->next = he[0]; \
     } while(0)
 
-static int mesh_add_triangle_with_verties(mesh_t *self,
+static triangle_t *mesh_add_triangle_with_verties(mesh_t *self,
         double x0, double y0,
         double x1, double y1,
         double x2, double y2)
@@ -234,10 +240,10 @@ static int mesh_add_triangle_with_verties(mesh_t *self,
 
     MESH_ADD_TRIANGLE(self, tri);
     ++self->num_t;
-    return 0;
+    return tri;
 }
 
-static int mesh_add_triangle(mesh_t *self,
+static triangle_t *mesh_add_triangle(mesh_t *self,
         half_edge_t *he, double x, double y)
 {
     vertex_t *v0 = he->vert;
@@ -297,16 +303,34 @@ static void mesh_del_bad_triangle(mesh_t *self, triangle_t *from, vertex_t *p,
 static void mesh_create_super_triangle(mesh_t *self,
         const vertex_t *verties, int num)
 {
+    half_edge_t *pair[3];
+    half_edge_t *he[3];
+    triangle_t *tri;
     vertex_t v[3];
     create_bounding_triangle(verties, num, v);
-   mesh_add_triangle_with_verties(self,
-           v[0].x, v[0].y,
-           v[1].x, v[1].y,
-           v[2].x, v[2].y);
+    tri = mesh_add_triangle_with_verties(self,
+            v[0].x, v[0].y,
+            v[1].x, v[1].y,
+            v[2].x, v[2].y);
+    
+    INIT_VERTEX(&(self->super_tri[0]), v[0].x, v[0].y);
+    INIT_VERTEX(&(self->super_tri[1]), v[1].x, v[1].y);
+    INIT_VERTEX(&(self->super_tri[2]), v[2].x, v[2].y);
 
-   INIT_VERTEX(&(self->super_tri[0]), v[0].x, v[0].y);
-   INIT_VERTEX(&(self->super_tri[1]), v[1].x, v[1].y);
-   INIT_VERTEX(&(self->super_tri[2]), v[2].x, v[2].y);
+
+    /*
+    he[0] = tri->edge;
+    he[1] = he[0]->next;
+    he[2] = he[1]->next;
+
+    pair[0] = he[0]->pair;
+    pair[1] = he[1]->pair;
+    pair[2] = he[2]->pair;
+
+    pair[0]->next = pair[2];
+    pair[1]->next = pair[0];
+    pair[2]->next = pair[1];
+    */
 }
 
 static triangle_t *mesh_locate(mesh_t *self, const vertex_t *v)

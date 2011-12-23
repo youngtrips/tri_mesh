@@ -12,7 +12,7 @@ MESH_ADD_TRIANGLE	mesh.h	76;"	d
 MESH_ADD_VERTEX	mesh.h	70;"	d
 MESH_ALLOC_OBJECT	mesh.c	16;"	d	file:
 MESH_FREE_OBJECT	mesh.c	32;"	d	file:
-MESH_FREE_OBJ_MEM	mesh.c	413;"	d	file:
+MESH_FREE_OBJ_MEM	mesh.c	440;"	d	file:
 SQR	utils.h	15;"	d
 __BAES_H	base.h	9;"	d
 __DLIST_H	dlist.h	25;"	d
@@ -51,7 +51,7 @@ init_dlist_node	dlist.h	/^static inline void init_dlist_node(dlist_t *node) {$/;
 log_err	utils.h	16;"	d
 main	test.c	/^int main()$/;"	f
 makeup_ccw_order	utils.h	33;"	d
-makeup_edge_loop	mesh.c	191;"	d	file:
+makeup_edge_loop	mesh.c	197;"	d	file:
 mesh_add_constrained_line	mesh.c	/^int mesh_add_constrained_line(mesh_t *self, vertex_t *st, vertex_t *ed)$/;"	f
 mesh_add_constrained_poly	mesh.c	/^int mesh_add_constrained_poly(mesh_t *self, vertex_t *verties, int num)$/;"	f
 mesh_add_edge	mesh.c	/^static half_edge_t *mesh_add_edge(mesh_t *self, vertex_t *st, vertex_t *ed)$/;"	f	file:
