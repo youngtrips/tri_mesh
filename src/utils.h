@@ -28,6 +28,16 @@ int create_bounding_triangle(const vertex_t *vertices, int num,
 
 double cross(const vertex_t *a, const vertex_t *b, const vertex_t *c);
 
+enum ORIENT_TYPE {
+    ORIENT_LEFT,
+    ORIENT_RIGHT
+};
+
+
+int locate_vertex_with_edge(const half_edge_t *he, const vertex_t *p);
+half_edge_t *locate_vertex_with_triangle(const triangle_t *tri,
+        const vertex_t *p);
+
 void print_vertex(const vertex_t *v);
 
 #define makeup_ccw_order(v) \

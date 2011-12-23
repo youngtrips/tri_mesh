@@ -12,7 +12,10 @@ MESH_ADD_TRIANGLE	mesh.h	76;"	d
 MESH_ADD_VERTEX	mesh.h	70;"	d
 MESH_ALLOC_OBJECT	mesh.c	16;"	d	file:
 MESH_FREE_OBJECT	mesh.c	32;"	d	file:
-MESH_FREE_OBJ_MEM	mesh.c	440;"	d	file:
+MESH_FREE_OBJ_MEM	mesh.c	467;"	d	file:
+ORIENT_LEFT	utils.h	/^    ORIENT_LEFT,$/;"	e	enum:ORIENT_TYPE
+ORIENT_RIGHT	utils.h	/^    ORIENT_RIGHT$/;"	e	enum:ORIENT_TYPE
+ORIENT_TYPE	utils.h	/^enum ORIENT_TYPE {$/;"	g
 SQR	utils.h	15;"	d
 __BAES_H	base.h	9;"	d
 __DLIST_H	dlist.h	25;"	d
@@ -21,6 +24,7 @@ __QUEUE_H	queue.h	9;"	d
 __UTILS_H	utils.h	9;"	d
 __dlist_add	dlist.h	/^static inline void __dlist_add(dlist_t *node,$/;"	f
 __dlist_del	dlist.h	/^static inline void __dlist_del(dlist_t *prev, dlist_t *next) {$/;"	f
+_locate_triangle	mesh.c	/^static triangle_t *_locate_triangle(triangle_t *from,$/;"	f	file:
 create_bounding_triangle	utils.c	/^int create_bounding_triangle(const vertex_t *vertices, int num, vertex_t *out)$/;"	f
 cross	utils.c	/^double cross(const vertex_t *p0, const vertex_t *p1, const vertex_t *p2)$/;"	f
 data	queue.h	/^    void *data;$/;"	m	struct:queue_entry_t
@@ -48,17 +52,19 @@ in_circumcircle	utils.c	/^int in_circumcircle(const vertex_t *a, const vertex_t 
 in_tri_circumcircle	utils.c	/^int in_tri_circumcircle(const triangle_t *tri, const vertex_t *p)$/;"	f
 in_triangle	utils.c	/^int in_triangle(const triangle_t *tri, const vertex_t *p)$/;"	f
 init_dlist_node	dlist.h	/^static inline void init_dlist_node(dlist_t *node) {$/;"	f
+locate_vertex_with_edge	utils.c	/^int locate_vertex_with_edge(const half_edge_t *he, const vertex_t *p)$/;"	f
+locate_vertex_with_triangle	utils.c	/^half_edge_t *locate_vertex_with_triangle(const triangle_t *tri,$/;"	f
 log_err	utils.h	16;"	d
 main	test.c	/^int main()$/;"	f
-makeup_ccw_order	utils.h	33;"	d
-makeup_edge_loop	mesh.c	197;"	d	file:
+makeup_ccw_order	utils.h	43;"	d
+makeup_edge_loop	mesh.c	203;"	d	file:
 mesh_add_constrained_line	mesh.c	/^int mesh_add_constrained_line(mesh_t *self, vertex_t *st, vertex_t *ed)$/;"	f
 mesh_add_constrained_poly	mesh.c	/^int mesh_add_constrained_poly(mesh_t *self, vertex_t *verties, int num)$/;"	f
 mesh_add_edge	mesh.c	/^static half_edge_t *mesh_add_edge(mesh_t *self, vertex_t *st, vertex_t *ed)$/;"	f	file:
 mesh_add_half_edge	mesh.c	/^static half_edge_t *mesh_add_half_edge(mesh_t *self,$/;"	f	file:
 mesh_add_new_vertex	mesh.c	/^static vertex_t *mesh_add_new_vertex(mesh_t *self, double x, double y)$/;"	f	file:
-mesh_add_triangle	mesh.c	/^static int mesh_add_triangle(mesh_t *self,$/;"	f	file:
-mesh_add_triangle_with_verties	mesh.c	/^static int mesh_add_triangle_with_verties(mesh_t *self,$/;"	f	file:
+mesh_add_triangle	mesh.c	/^static triangle_t *mesh_add_triangle(mesh_t *self,$/;"	f	file:
+mesh_add_triangle_with_verties	mesh.c	/^static triangle_t *mesh_add_triangle_with_verties(mesh_t *self,$/;"	f	file:
 mesh_add_vertex	mesh.c	/^int mesh_add_vertex(mesh_t *self, double x, double y)$/;"	f
 mesh_alloc_half_edge	mesh.c	/^static half_edge_t *mesh_alloc_half_edge(mesh_t *self)$/;"	f	file:
 mesh_alloc_triangle	mesh.c	/^static triangle_t *mesh_alloc_triangle(mesh_t *self)$/;"	f	file:
@@ -110,7 +116,7 @@ tlist	mesh.h	/^    dlist_t tlist;$/;"	m	struct:mesh_t
 triangle_t	mesh.h	/^struct triangle_t {$/;"	s
 triangle_t	mesh.h	/^typedef struct triangle_t triangle_t;$/;"	t	typeref:struct:triangle_t
 vert	mesh.h	/^    vertex_t *vert;$/;"	m	struct:half_edge_t
-vertex_equal	utils.h	52;"	d
+vertex_equal	utils.h	62;"	d
 vertex_t	mesh.h	/^struct vertex_t {$/;"	s
 vertex_t	mesh.h	/^typedef struct vertex_t vertex_t;$/;"	t	typeref:struct:vertex_t
 verties	test.c	/^vertex_t verties[10];$/;"	v

@@ -303,8 +303,8 @@ static void mesh_del_bad_triangle(mesh_t *self, triangle_t *from, vertex_t *p,
 static void mesh_create_super_triangle(mesh_t *self,
         const vertex_t *verties, int num)
 {
-    half_edge_t *pair[3];
-    half_edge_t *he[3];
+//    half_edge_t *pair[3];
+//    half_edge_t *he[3];
     triangle_t *tri;
     vertex_t v[3];
     create_bounding_triangle(verties, num, v);
@@ -333,24 +333,31 @@ static void mesh_create_super_triangle(mesh_t *self,
     */
 }
 
+static triangle_t *_locate_triangle(triangle_t *from,
+        const vertex_t *v)
+{
+    half_edge_t *he;
+    if (from == NULL) {
+        return NULL;
+    }
+
+    he = locate_vertex_with_triangle(from, v);
+    if (he == NULL) {
+        /* find triange which contain this vertex */
+        return from;
+    }
+    return _locate_triangle(he->pair->face, v);
+}
+
 static triangle_t *mesh_locate(mesh_t *self, const vertex_t *v)
 {
     triangle_t *tri;
-    dlist_t *i;
-    int ret;
 
-    /* TODO: use search methd with O(logN) */
-    dlist_foreach(i, &(self->tlist)) {
-        tri = (triangle_t*)dlist_entry(i, triangle_t, node);
-        ret = in_triangle(tri, v);
-        if (ret == -1) {
-            return NULL;
-        }
-        if (ret == 1) {
-            return tri;
-        }
+    if (self->tlist.next == &(self->tlist)) {
+        return NULL;
     }
-    return NULL;
+    tri = (triangle_t*)dlist_entry((self->tlist.next), triangle_t, node);
+    return _locate_triangle(tri, v);
 }
 
 mesh_t *mesh_init(const vertex_t *verties, int num)

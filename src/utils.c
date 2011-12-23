@@ -148,3 +148,43 @@ void print_vertex(const vertex_t *v)
     }
 }
 
+int locate_vertex_with_edge(const half_edge_t *he, const vertex_t *p)
+{
+    vertex_t *a;
+    vertex_t *b;
+
+    a = he->vert;
+    b = he->pair->vert;
+
+    if (cross(a, p, b) < 0) {
+        return ORIENT_LEFT;
+    }
+    return ORIENT_RIGHT;
+}
+
+half_edge_t *locate_vertex_with_triangle(const triangle_t *tri,
+        const vertex_t *p)
+{
+    half_edge_t *he[3];
+    int f[3];
+
+    he[0] = tri->edge;
+    he[1] = he[0]->next;
+    he[2] = he[1]->next;
+
+    f[0] = locate_vertex_with_edge(he[0], p);
+    f[1] = locate_vertex_with_edge(he[1], p);
+    f[2] = locate_vertex_with_edge(he[2], p);
+
+    printf("f0=%d, f1=%d, f2=%d\n", f[0], f[1], f[2]);
+    if (f[0] == ORIENT_LEFT && f[1] == ORIENT_LEFT &&
+            f[2] == ORIENT_LEFT) {
+        /* inside triangle */
+        return NULL;
+    }
+    if (f[0] == ORIENT_RIGHT) return he[0];
+    if (f[1] == ORIENT_RIGHT) return he[1];
+    if (f[2] == ORIENT_RIGHT) return he[2];
+    return NULL;
+}
+
