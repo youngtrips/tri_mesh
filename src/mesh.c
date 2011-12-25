@@ -458,6 +458,10 @@ int mesh_add_constrained_poly(mesh_t *self, vertex_t *verties, int num)
     return 0;
 }
 
+static void triangulate_pseudo_polygon_delaunay()
+{
+}
+
 int mesh_add_constrained_line(mesh_t *self, vertex_t *st, vertex_t *ed)
 {
     return 0;
