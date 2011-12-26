@@ -23,7 +23,7 @@ def draw_polygons(screen, polygons):
 
 if __name__ == "__main__":
     w = 1280 
-    h = 800
+    h = 900
     screen = pygame.display.set_mode((w, h), pygame.DOUBLEBUF | pygame.HWSURFACE, 32)
     pygame.display.set_caption("Triangle Mesh PyBinding Demo")
     bg = pygame.Surface(screen.get_size())
