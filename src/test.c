@@ -26,3 +26,15 @@ int main()
     return 0;
 }
 
+static const int VERTEX_BUCKET_COUNT = (1<<12);
+
+inline int computeVertexHash(int x, int y, int z)
+{
+	const unsigned int h1 = 0x8da6b343; // Large multiplicative constants;
+	const unsigned int h2 = 0xd8163841; // here arbitrarily chosen primes
+	const unsigned int h3 = 0xcb1ab31f;
+	unsigned int n = h1 * x + h2 * y + h3 * z;
+	return (int)(n & (VERTEX_BUCKET_COUNT-1));
+}
+
+
